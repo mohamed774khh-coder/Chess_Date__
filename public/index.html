@@ -1,0 +1,354 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#030213">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cinzel:wght@400;700&display=swap"
+    rel="stylesheet">
+  <title>♔ Chess Date ♕</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="custom-improvements.css" />
+</head>
+
+<body>
+  <div id="startScreen" class="screen active">
+    <div class="start-container">
+      <div class="royal-header">
+        <div class="crown-icon-large">👑</div>
+        <h1 class="royal-title">Chess Date</h1>
+      </div>
+
+      <div class="lobby-form">
+        <div class="input-modern">
+          <input type="text" id="playerName" placeholder="Player Name" maxlength="12">
+        </div>
+
+        <div class="input-modern">
+          <input type="text" id="roomName" placeholder="Room Name">
+        </div>
+
+        <button id="joinBtn" class="btn-royal-gold">
+          <span class="btn-icon">👥</span> Join Room
+        </button>
+
+        <button id="matchmakingBtn" class="btn-royal-outline">
+          <span class="btn-icon">⚡</span> Quick Match
+        </button>
+
+        <button id="aiBtn" class="btn-royal-outline">
+          <span class="btn-icon">🤖</span> Play vs AI
+        </button>
+
+        <button id="localBtn" class="btn-royal-outline">
+          <span class="btn-icon">🎮</span> Pass & Play
+        </button>
+
+        <div class="lobby-footer-btns">
+          <button id="profileBtn" class="btn-royal-mini">
+            <span class="btn-icon">👤</span> Profile
+          </button>
+           <button id="leaderboardBtn" class="btn-royal-mini">
+             <span class="btn-icon">🏆</span> Leaderboard
+           </button>
+           <button id="pwaInstallBtn" class="btn-royal-mini hidden" style="background: rgba(255, 255, 255, 0.1); border: 1px dashed var(--royal-gold);">
+             <span class="btn-icon">📲</span> Install App
+           </button>
+         </div>
+        <p id="lobbyStatus" class="lobby-status"></p>
+        
+        <footer class="app-footer">
+          <div class="footer-content">
+            <span class="footer-text">Developed by <strong>bnkhlid</strong> &lt;/&gt;</span>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profileModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Player Profile</h2>
+        <div class="profile-stats">
+          <p>Name: <span id="profileNameDisplay">-</span></p>
+          <p>Wins: <span id="profileWins">0</span></p>
+          <p>Losses: <span id="profileLosses">0</span></p>
+        </div>
+        <button id="closeProfileBtn" class="btn-primary">CLOSE</button>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD MODAL -->
+    <div id="leaderboardModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>🏆 Leaderboard (Session)</h2>
+        <ul id="leaderboardList" style="list-style: none; padding: 0; text-align: left;">
+          <li>Loading...</li>
+        </ul>
+        <button id="closeLeaderboardBtn" class="btn-primary">CLOSE</button>
+      </div>
+    </div>
+
+    <!-- ACHIEVEMENTS MODAL -->
+    <div id="achievementsModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>🏅 Achievements</h2>
+        <div id="achievementsList" style="text-align: left; max-height: 300px; overflow-y: auto;">
+          <!-- Items injected by JS -->
+        </div>
+        <button id="closeAchievementsBtn" class="btn-primary">CLOSE</button>
+      </div>
+    </div>
+
+    <!-- IOS INSTALL MODAL -->
+    <div id="iosInstallModal" class="modal hidden">
+      <div class="modal-content" style="text-align: center;">
+        <h2>📲 Install on iPhone</h2>
+        <p style="margin: 20px 0; font-size: 1.1em; line-height: 1.6;">
+          1. Tap the <strong>Share</strong> button <span style="font-size: 1.5em;">⎋</span> below.<br>
+          2. Scroll down and select <br><strong>"Add to Home Screen"</strong> <span style="font-size: 1.5em;">➕</span>.
+        </p>
+        <button id="closeIosInstallBtn" class="btn-primary">Got it!</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gameScreen" class="screen">
+    <div class="main-game-area">
+      <!-- 1. TIMERS -->
+      <!-- 1. OPPONENT TIMER (Will be ordered 1 or 4) -->
+      <div class="timer-card white-player" id="whiteTimerCard">
+          <div class="timer-top">
+            <span class="status-dot"></span>
+            <span class="player-name" id="whitePlayerName">WHITE</span>
+            <span class="timer-value" id="whiteTimer">15:00</span>
+          </div>
+          <div class="timer-bottom">
+            <span class="personality">🧠 Calculating</span>
+            <span class="energy-mini">⚡ <span id="whiteEnergyCard">0</span></span>
+          </div>
+      </div>
+
+      <!-- 2. TURN INDICATOR (Order 2) -->
+      <div class="turn-badge-container">
+          <button id="undoBtn" class="btn-icon-only">↩️</button>
+          <div class="turn-display" id="turnIndicator">WHITE'S TURN</div>
+          <button id="soundToggle" class="btn-icon-only">🔊</button>
+      </div>
+
+      <!-- 3. SELF TIMER (Order 4) -->
+        <div class="timer-card black-player active" id="blackTimerCard">
+          <div class="timer-top">
+            <span class="status-dot"></span>
+            <span class="player-name" id="blackPlayerName">BLACK</span>
+            <span class="timer-value" id="blackTimer">15:00</span>
+          </div>
+          <div class="timer-bottom">
+            <span class="personality">🔥 Focused</span>
+            <span class="energy-mini">⚡ <span id="blackEnergyCard">0</span></span>
+          </div>
+        </div>
+
+      <!-- 2. BOARD (BIGGER) -->
+      <div class="active-power-banner hidden" id="activePowerBanner">
+        <span class="dot green"></span> Double Turn Active
+      </div>
+      <div class="board-container-modern">
+        <div id="chessBoard" class="chess-board"></div>
+        <div id="lastMoveIndicator" class="last-move"></div>
+      </div>
+
+      <!-- 3. POWERS & ACTIONS -->
+      <div class="powers-container-modern">
+        <div class="section-title">
+          <span class="title-icon">⚡</span> Powers
+        </div>
+
+        <div class="energy-widget">
+          <div class="energy-metadata">
+            <span>Energy</span>
+            <span id="energyCount">0 / 5</span>
+          </div>
+          <div class="energy-bar-modern">
+            <div class="energy-fill-modern" id="energyFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="powers-grid-modern">
+          <div class="power-card" data-power="queen-rush" data-cost="3">
+            <div class="power-card-left">
+              <div class="power-icon-box gold">👑</div>
+              <div class="power-info">
+                <div class="power-name">Queen Rush</div>
+                <div class="power-desc">Move queen twice</div>
+              </div>
+            </div>
+            <div class="power-cost-badge">3 ⚡</div>
+          </div>
+
+          <div class="power-card" data-power="double-turn" data-cost="4">
+            <div class="power-card-left">
+              <div class="power-icon-box green">🔄</div>
+              <div class="power-info">
+                <div class="power-name">Double Turn</div>
+                <div class="power-desc">Take two turns</div>
+              </div>
+            </div>
+            <div class="power-cost-badge">4 ⚡</div>
+          </div>
+
+          <div class="power-card" data-power="teleport" data-cost="5">
+            <div class="power-card-left">
+              <div class="power-icon-box blue">⚡</div>
+              <div class="power-info">
+                <div class="power-name">Teleport</div>
+                <div class="power-desc">Teleport any piece</div>
+              </div>
+            </div>
+            <div class="power-cost-badge">5 ⚡</div>
+          </div>
+
+
+        </div>
+
+          <div class="power-card" data-power="time-freeze" data-cost="5">
+            <div class="power-card-left">
+              <div class="power-icon-box blue">❄️</div>
+              <div class="power-info">
+                <div class="power-name">Time Freeze</div>
+                <div class="power-desc">Stop clock (3 mins)</div>
+              </div>
+            </div>
+            <div class="power-cost-badge">5 ⚡</div>
+          </div>
+        </div>
+
+        <!-- Combo Button Removed -->
+
+
+
+        <div class="game-action-btns">
+          <button id="openChatBtn" class="btn-royal-gold wide">
+            <span class="btn-icon">💬</span> Open Chat
+          </button>
+          <button id="viewStatsBtn" class="btn-royal-outline wide">
+            <span class="btn-icon">📊</span> View Stats
+          </button>
+          <button id="forfeitBtn" class="btn-royal-mini wide" style="margin-top: 10px; opacity: 0.7;">
+            <span class="btn-icon">🏳️</span> Resign Game
+          </button>
+        </div>
+        
+        <footer class="app-footer">
+          <div class="footer-content">
+            <span class="footer-text">Developed by <strong>bnkhlid</strong> &lt;/&gt;</span>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="screen">
+    <div class="end-container">
+      <div id="endContent"></div>
+      <button id="rematchBtn" class="btn-primary">REMATCH</button>
+      <button id="settingsBtn" class="btn-secondary">MAIN MENU</button>
+    </div>
+  </div>
+
+  </div>
+  </div>
+
+  <!-- CHAT OVERLAY -->
+  <div id="chatOverlay" class="modal hidden">
+    <div class="modal-content chat-modal">
+      <h3>💬 CHAT</h3>
+      <div id="chatBox" class="chat-box"></div>
+      <div class="chat-input-section">
+        <input id="chatInput" type="text" placeholder="Say something..." />
+        <button id="sendMsg">→</button>
+      </div>
+      <div class="emoji-reactions">
+        <button class="emoji-btn" data-emoji="❤️">❤️</button>
+        <button class="emoji-btn" data-emoji="🔥">🔥</button>
+        <button class="emoji-btn" data-emoji="😅">😅</button>
+        <button class="emoji-btn" data-emoji="♟️">♟️</button>
+      </div>
+      <button class="btn-royal-outline close-modal-btn"
+        onclick="document.getElementById('chatOverlay').classList.add('hidden')">Close</button>
+    </div>
+  </div>
+
+  <!-- STATS OVERLAY -->
+  <div id="statsOverlay" class="modal hidden">
+    <div class="modal-content stats-modal">
+      <h3>📊 Game Stats</h3>
+      <div class="stats-grid">
+        <div class="stat-player">
+          <h4>⚪ WHITE</h4>
+          <p>Moves: <span id="whiteMoves">0</span></p>
+          <p>Captures: <span id="whiteCaptures">0</span></p>
+          <p>Powers Used: <span id="whitePowers">0</span></p>
+        </div>
+        <div class="stat-player">
+          <h4>⚫ BLACK</h4>
+          <p>Moves: <span id="blackMoves">0</span></p>
+          <p>Captures: <span id="blackCaptures">0</span></p>
+          <p>Powers Used: <span id="blackPowers">0</span></p>
+        </div>
+      </div>
+      <button class="btn-royal-outline close-modal-btn"
+        onclick="document.getElementById('statsOverlay').classList.add('hidden')">Close</button>
+    </div>
+  </div>
+
+  <!-- PROMOTION MODAL -->
+  <div id="promotionModal" class="modal hidden">
+    <div class="modal-content promotion-modal">
+      <h3>Choose Promotion</h3>
+      <div class="promotion-options">
+        <button class="promotion-btn btn-royal-gold" data-piece="q">♕ Queen</button>
+        <button class="promotion-btn btn-royal-gold" data-piece="r">♖ Rook</button>
+        <button class="promotion-btn btn-royal-gold" data-piece="b">♗ Bishop</button>
+        <button class="promotion-btn btn-royal-gold" data-piece="n">♘ Knight</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Elements for Game Sounds -->
+  <audio id="moveSound" preload="auto" muted>
+    <source src="ficha-de-ajedrez-34722.mp3" type="audio/mpeg" />
+  </audio>
+  <audio id="captureSound" preload="auto" muted>
+    <source src="ficha-de-ajedrez-34722.mp3" type="audio/mpeg" />
+  </audio>
+  <audio id="powerSound" preload="auto" muted>
+    <source src="item-pick-up-38258.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered:', registration);
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+  </script>
+
+
+</body>
+
+</html>

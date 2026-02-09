@@ -1,0 +1,23 @@
+{
+  "name": "chess-date",
+  "version": "1.0.0",
+  "description": "Premium Chess Game - A story-driven chess experience for couples",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "chess",
+    "game",
+    "royal",
+    "powers"
+  ],
+  "author": "Royal Chess Dev",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3"
+  }
+}

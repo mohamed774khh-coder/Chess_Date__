@@ -1,0 +1,760 @@
+/* ============================================
+   FIGMA IMAGE-BASED PREMIUM UI
+   ============================================ */
+
+:root {
+    --royal-navy: #030213;
+    --royal-gold: #f1b505;
+    --royal-gold-muted: rgba(241, 181, 5, 0.2);
+    --royal-bg: #030213;
+    --card-bg: #0a0d1d;
+    --card-border: #1e253c;
+    --text-primary: #ffffff;
+    --text-muted: #94a3b8;
+    --status-green: #10b981;
+    --status-orange: #f59e0b;
+}
+
+html {
+    height: -webkit-fill-available;
+}
+
+body {
+    background: var(--royal-navy) !important;
+    color: var(--text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    padding-bottom: 120px !important;
+    /* Extra space for footer */
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    /* ENABLE SCROLLING */
+    height: auto !important;
+    min-height: 100vh;
+    min-height: 100dvh; /* Mobile fix */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth touch scroll */
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* LOBBY REDESIGN */
+.start-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 90vh !important;
+    /* Slightly less than full height to center better against footer */
+    gap: 40px !important;
+    padding: 20px !important;
+    padding: 20px !important;
+    text-align: center;
+}
+
+.royal-header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+.crown-icon-large {
+    font-size: 80px;
+    /* Reduced from 80px */
+    color: var(--royal-gold);
+    margin-bottom: 15px;
+}
+
+.royal-title {
+    font-family: 'Cinzel', serif !important;
+    font-size: 3rem !important;
+    /* Reduced from 3rem */
+    color: var(--royal-gold) !important;
+    font-weight: 700 !important;
+    margin-bottom: 5px !important;
+}
+
+.royal-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    /* Reduced from 1.1rem */
+    letter-spacing: 1px;
+}
+
+.lobby-form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-modern input {
+    width: 100%;
+    background: #0a0d1d !important;
+    border: 1px solid #1e253c !important;
+    border-radius: 12px !important;
+    padding: 15px 20px !important;
+    /* Reduced padding */
+    color: white !important;
+    font-size: 1rem !important;
+}
+
+.btn-royal-gold {
+    background: var(--royal-gold) !important;
+    color: black !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    /* Reduced padding */
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    /* Reduced from 1.1rem */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 10px 25px rgba(241, 181, 5, 0.3);
+}
+
+.btn-royal-outline {
+    background: transparent !important;
+    color: var(--royal-gold) !important;
+    border: 1px solid var(--royal-gold) !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    /* Reduced padding */
+    font-weight: 600 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.lobby-footer-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-royal-mini {
+    background: transparent !important;
+    color: var(--royal-gold) !important;
+    border: 1px solid #1e253c !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+    font-size: 0.9rem !important;
+}
+
+/* GAME UI REDESIGN */
+.main-game-area {
+    display: grid !important;
+    grid-template-columns: 320px 1fr !important;
+    gap: 40px !important;
+    padding: 40px !important;
+    align-items: start !important;
+}
+
+.romantic-notification {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 105, 180, 0.15); /* Pink tint */
+    color: white;
+    padding: 22px 60px;
+    border-radius: 30px;
+    z-index: 9999;
+    box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.2);
+    font-size: 1.35rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid rgba(255, 192, 203, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    pointer-events: none;
+    width: 90%;
+    max-width: 850px;
+    animation: RomanticFloatIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.romantic-notification i, .romantic-notification span {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.4));
+}
+
+@keyframes RomanticFloatIn {
+    0% { top: -100px; opacity: 0; transform: translateX(-50%) scale(0.8); }
+    100% { top: 30px; opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+.romantic-notification.hide {
+    animation: RomanticFloatOut 0.8s forwards ease-in;
+}
+
+@keyframes RomanticFloatOut {
+    0% { top: 30px; opacity: 1; transform: translateX(-50%) scale(1); }
+    100% { top: -100px; opacity: 0; transform: translateX(-50%) scale(0.8); }
+}
+
+/* TIMERS STACK */
+.timers-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.timers-stack.flipped-stack {
+    flex-direction: column-reverse;
+}
+
+.timer-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.timer-card.active {
+    border-color: var(--royal-gold);
+    box-shadow: 0 0 15px var(--royal-gold-muted);
+}
+
+.timer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.player-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.timer-value {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--royal-gold);
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--status-green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--status-green);
+}
+
+.status-dot.orange {
+    background: var(--status-orange);
+    box-shadow: 0 0 8px var(--status-orange);
+}
+
+.personality {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.energy-mini {
+    background: rgba(241, 181, 5, 0.1);
+    color: var(--royal-gold);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 10px;
+    border: 1px solid rgba(241, 181, 5, 0.2);
+}
+
+.turn-badge-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--royal-navy);
+    padding: 10px 0;
+}
+
+.turn-display {
+    background: var(--royal-gold);
+    color: black;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(241, 181, 5, 0.4);
+}
+
+.btn-icon-only {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* POWERS SECTION REDESIGN */
+.powers-container-modern {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--royal-gold);
+}
+
+.energy-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.energy-metadata {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.energy-bar-modern {
+    height: 12px;
+    background: #1e253c;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.energy-fill-modern {
+    height: 100%;
+    background: var(--royal-gold);
+}
+
+.powers-grid-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.power-card {
+    background: #141a2f;
+    border: 1px solid #1e253c;
+    border-radius: 14px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.power-card:hover {
+    border-color: var(--royal-gold-muted);
+}
+
+.power-card-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.power-icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.power-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.power-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.power-cost-badge {
+    background: var(--card-bg);
+    border: 1px solid #1e253c;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--royal-gold);
+}
+
+.btn-royal-combo {
+    background: #1e253c;
+    color: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-royal-combo small {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.power-hint {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* GAME ACTION BTNS */
+.game-action-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.wide {
+    width: 100% !important;
+}
+
+/* MODALS */
+.chat-modal,
+.stats-modal {
+    background: var(--royal-navy) !important;
+    border: 1px solid var(--royal-gold-muted) !important;
+    padding: 30px !important;
+    border-radius: 20px !important;
+    max-width: 500px !important;
+    width: 90% !important;
+}
+
+.close-modal-btn {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.active-power-banner {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--status-green);
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: none;
+    /* HIDE BY DEFAULT */
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.dot.green {
+    width: 8px;
+    height: 8px;
+    background: var(--status-green);
+    border-radius: 50%;
+}
+
+/* BOARD CONTAINER */
+.board-container-modern {
+    background: var(--card-bg);
+    padding: 10px !important;
+    border-radius: 20px !important;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    width: 100% !important;
+    max-width: 95vw !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+/* FOOTER POLISH */
+.app-footer {
+    background: transparent !important;
+    /* Make it more integrated */
+    border-top: none !important;
+    padding: 30px 0 !important;
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    font-family: monospace;
+}
+
+.footer-text strong {
+    color: var(--royal-gold);
+}
+
+#gameScreen,
+#startScreen {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    height: auto !important;
+    min-height: 100dvh !important;
+    position: relative !important; /* Allow scroll */
+    top: 0;
+    left: 0;
+    padding-bottom: 50px;
+}
+
+.main-game-area {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+    padding: 20px 5px 100px 5px !important;
+    /* Reduced horizontal padding from 20px to 5px */
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: min-content;
+}
+
+.left-panel,
+.center-area,
+.right-panel-hidden {
+    width: 100% !important;
+    max-width: 900px !important;
+    /* Increased from 800px */
+    margin: 0 auto !important;
+}
+
+#chessBoard {
+    width: 98vw !important;
+    height: 98vw !important;
+    max-width: 900px !important;
+    max-height: 900px !important;
+}
+
+/* Natural size for Desktop/Web */
+@media (min-width: 1024px) {
+    #chessBoard {
+        width: 650px !important;
+        height: 650px !important;
+        max-width: 650px !important;
+        max-height: 650px !important;
+    }
+}
+
+/* Adjustments for vertical flow */
+.timers-stack {
+    width: 100% !important;
+    max-width: 450px !important;
+    margin: 0 auto 20px auto !important;
+}
+
+.powers-container-modern {
+    width: 100% !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
+}
+
+.game-action-btns {
+    width: 100% !important;
+    max-width: 450px !important;
+    margin: 20px auto !important;
+}
+
+@media (max-width: 1100px) {
+    .main-game-area {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 5px !important;
+        gap: 15px !important;
+    }
+
+    /* 
+       MOBILE ORDERING STRATEGY (Explicit) 
+       Default = White Perspective
+    */
+    #blackTimerCard { order: 1; margin-bottom: 10px; }
+    .turn-badge-container { order: 2; margin-bottom: 10px; }
+    .active-power-banner { order: 2; }
+    
+    .board-container-modern { 
+        order: 3; 
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 5;
+    }
+    
+    #whiteTimerCard { order: 4; margin-top: 10px; }
+    
+    .powers-container-modern { order: 5; margin-top: 20px; }
+    .game-action-btns { order: 6; }
+    .app-footer { order: 7; }
+
+    /* When Playing Black: Swap Timers */
+    .main-game-area.playing-black #whiteTimerCard { order: 1 !important; margin-bottom: 10px; }
+    .main-game-area.playing-black #blackTimerCard { order: 4 !important; margin-top: 10px; }
+
+    #chessBoard {
+        max-width: 95vw !important;
+        max-height: 95vw !important;
+        box-shadow: 0 4px 30px rgba(0,0,0,0.5); /* Deep shadow for both */
+    }
+}
+
+/* PROMOTION MODAL */
+.promotion-modal {
+    max-width: 400px;
+    text-align: center;
+    background: var(--royal-navy) !important;
+    border: 2px solid var(--royal-gold) !important;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 40px rgba(241, 181, 5, 0.4);
+}
+
+.promotion-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.promotion-btn {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+
+.promotion-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(241, 181, 5, 0.3);
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS v2
+   ========================================= */
+@media screen and (max-width: 900px) {
+    /* 1. Body & Container Adjustments */
+    body {
+        padding-bottom: 20px !important;
+        height: auto !important;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .main-game-area {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 10px !important;
+        gap: 15px !important;
+    }
+
+    /* 2. Unbox Timers for Reordering */
+    .timers-stack {
+        display: contents !important; /* Removes the container visual box, children become flex items of parent */
+    }
+
+    /* 3. Board Sizing & Ordering */
+    .board-container-modern {
+        order: 10; /* Middle */
+        width: 100%;
+        max-width: 100vw;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        margin: 5px 0;
+    }
+
+    .chess-board {
+        width: 95vw !important;
+        height: 95vw !important;
+        max-width: 95vw !important;
+        max-height: 95vw !important;
+    }
+
+    /* 4. Timer Logic: DEFAULT (White Player Perspective) */
+    /* Black (Opponent) -> Top (Order 0) */
+    #blackTimerCard { order: 0; margin-bottom: 5px; }
+    /* Badge -> Below Opponent (Order 5) */
+    .turn-badge-container { order: 5; margin-bottom: 5px; width: 100%; justify-content: space-between; }
+    /* White (Me) -> Bottom (Order 20) */
+    #whiteTimerCard { order: 20; margin-top: 5px; }
+    
+
+    /* 5. Timer Logic: FLIPPED (Black Player Perspective) */
+    .timers-stack.flipped-stack #whiteTimerCard {
+        order: 0 !important; /* Opponent (White) goes top */
+        margin-bottom: 5px;
+    }
+
+    .timers-stack.flipped-stack #blackTimerCard {
+        order: 20 !important; /* Me (Black) goes bottom */
+        margin-top: 5px;
+    }
+
+    /* 6. Powers & Footer */
+    .powers-container-modern {
+        order: 30;
+        width: 100%;
+        padding-bottom: 80px; /* Extra space for scrolling to see bottom power */
+    }
+    
+    .power-hint {
+        display: none; /* Hide dev credit on mobile to save space */
+    }
+    
+    .lbl-desktop-only {
+        display: none !important;
+    }
+}
